@@ -3,10 +3,6 @@ let
 in pkgs.mkShell {
   buildInputs = [
     pkgs.python3
-    pkgs.python3.pkgs.requests
-    pkgs.python3.pkgs.fastavro
-    pkgs.python3.pkgs.libxml2
-    pkgs.python3.pkgs.lxml
   ];
   shellHook = ''
     export OPENAI_API_KEY="<PUT_KEY_HERE>"
