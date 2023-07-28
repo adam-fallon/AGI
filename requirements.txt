@@ -1,0 +1,120 @@
+aiohttp==3.8.5
+aiosignal==1.3.1
+anthropic==0.2.10
+anyio==3.7.1
+asn1crypto==1.5.1
+async-timeout==4.0.2
+attrs==23.1.0
+backoff==2.2.1
+beautifulsoup4==4.12.2
+boto3==1.28.14
+botocore==1.31.14
+Brotli @ file:///private/tmp/nix-build-python3.10-brotli-1.0.9.drv-0/source/dist/Brotli-1.0.9-cp310-cp310-macosx_11_0_arm64.whl
+brotlicffi @ file:///private/tmp/nix-build-python3.10-brotlicffi-1.0.9.2.drv-0/source/dist/brotlicffi-1.0.9.2-cp310-abi3-macosx_11_0_arm64.whl
+certifi @ file:///private/tmp/nix-build-python3.10-certifi-2022.12.07.drv-0/source/dist/certifi-2022.12.7-py3-none-any.whl
+cffi @ file:///private/tmp/nix-build-python3.10-cffi-1.15.1.drv-0/cffi-1.15.1/dist/cffi-1.15.1-cp310-cp310-macosx_11_0_arm64.whl
+charset-normalizer @ file:///private/tmp/nix-build-python3.10-charset-normalizer-3.0.1.drv-0/source/dist/charset_normalizer-3.0.1-py3-none-any.whl
+click==8.1.6
+cohere==4.18.0
+contextlib2==21.6.0
+courlan==0.9.3
+cryptography==40.0.2
+dataclasses-json==0.5.13
+dateparser==1.1.8
+dnspython==2.4.1
+docker==6.1.3
+exceptiongroup==1.1.2
+fastapi==0.100.1
+fastavro @ file:///private/tmp/nix-build-python3.10-fastavro-1.7.4.drv-0/source/dist/fastavro-1.7.4-cp310-cp310-macosx_11_0_arm64.whl
+filelock==3.12.2
+frozenlist==1.4.0
+fsspec==2023.6.0
+graphlib==0.9.5
+griptape==0.14.7
+griptape-tools==0.16.3
+h11==0.14.0
+htmldate==1.4.3
+httpcore==0.17.3
+httpx==0.24.1
+huggingface-hub==0.16.4
+idna @ file:///private/tmp/nix-build-python3.10-idna-3.4.drv-0/idna-3.4/dist/idna-3.4-py3-none-any.whl
+importlib-metadata==6.8.0
+Jinja2==3.1.2
+jmespath==1.0.1
+jsonschema==4.18.4
+jsonschema-specifications==2023.7.1
+jusText==3.0.0
+langchain==0.0.246
+langcodes==3.3.0
+langsmith==0.0.15
+loguru==0.7.0
+lxml @ file:///private/tmp/nix-build-python3.10-lxml-4.9.2.drv-0/source/dist/lxml-4.9.2-cp310-cp310-macosx_11_0_arm64.whl
+markdown-it-py==3.0.0
+MarkupSafe==2.1.3
+marqo==1.1.1
+marshmallow==3.20.1
+marshmallow-enum==1.5.1
+mdurl==0.1.2
+mpmath==1.3.0
+multidict==6.0.4
+mypy-extensions==1.0.0
+networkx==3.1
+numexpr==2.8.4
+numpy==1.25.1
+openai==0.27.8
+openapi-schema-pydantic==1.2.4
+oscrypto==1.3.0
+packaging==23.1
+pinecone-client==2.2.2
+pycparser @ file:///private/tmp/nix-build-python3.10-pycparser-2.21.drv-0/pycparser-2.21/dist/pycparser-2.21-py2.py3-none-any.whl
+pycryptodomex==3.18.0
+pydantic==1.10.12
+Pygments==2.15.1
+PyJWT==2.8.0
+pyOpenSSL==23.2.0
+PyPDF2==3.0.1
+pysbd==0.3.4
+PySocks @ file:///private/tmp/nix-build-python3.10-pysocks-1.7.1.drv-0/PySocks-1.7.1/dist/PySocks-1.7.1-py3-none-any.whl
+python-dateutil==2.8.2
+python-decouple==3.8
+python-dotenv==1.0.0
+pytz==2023.3
+PyYAML==6.0.1
+referencing==0.30.0
+regex==2023.6.3
+requests @ file:///private/tmp/nix-build-python3.10-requests-2.31.0.drv-0/requests-2.31.0/dist/requests-2.31.0-py3-none-any.whl
+rich==13.4.2
+rpds-py==0.9.2
+s3transfer==0.6.1
+safetensors==0.3.1
+schema==0.7.5
+six==1.16.0
+sniffio==1.3.0
+snowflake-connector-python==3.0.4
+snowflake-sqlalchemy==1.4.7
+sortedcontainers==2.4.0
+soupsieve==2.4.1
+SQLAlchemy==1.4.49
+sqlalchemy-redshift==0.8.14
+starlette==0.27.0
+stopit==1.1.2
+stringcase==1.2.0
+sympy==1.12
+tenacity==8.2.2
+tiktoken==0.4.0
+tld==0.13
+tokenizers==0.13.3
+torch==2.0.1
+tqdm==4.65.0
+trafilatura==1.6.1
+transformers==4.31.0
+typing-inspect==0.9.0
+typing_extensions==4.7.1
+tzlocal==5.0.1
+urllib3 @ file:///private/tmp/nix-build-python3.10-urllib3-1.26.14.drv-0/urllib3-1.26.14/dist/urllib3-1.26.14-py2.py3-none-any.whl
+uuid==1.30
+uvicorn==0.23.1
+vlite==0.1.7
+websocket-client==1.6.1
+yarl==1.9.2
+zipp==3.16.2
