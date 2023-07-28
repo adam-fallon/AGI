@@ -1,67 +1,86 @@
 #!/usr/bin/env python3
 
-from griptape.drivers import OpenAiPromptDriver
-from griptape.structures import Agent
-from griptape.tools import WebScraper
-from griptape.events import StartPromptEvent, FinishPromptEvent
-from griptape.memory.structure import ConversationMemory
-from griptape.tasks import PromptTask, ToolkitTask
-from griptape.structures import Pipeline
-from griptape import utils
-from griptape.loaders import WebLoader
-from griptape.engines import VectorQueryEngine
-from griptape.tools import KnowledgeBaseClient
-
+from langchain.document_loaders import BSHTMLLoader
+from langchain.document_loaders import WebBaseLoader
+from vlite import VLite
 import openai
 
-def handle_prompt_event(event, token_counter):
-    print(event)
-    token_counter.add_tokens(event.token_count)
+from langchain.llms import OpenAI
+from langchain.chat_models import ChatOpenAI
 
+from langchain.chains import LLMChain
+from langchain.schema import BaseOutputParser
+
+from langchain.prompts.chat import (
+    ChatPromptTemplate,
+    SystemMessagePromptTemplate,
+    HumanMessagePromptTemplate,
+)
+
+DEBUG=False
+WEB_GET=False
+PERSIST=False
+
+db = VLite()
+llm = OpenAI()
+chat_model = ChatOpenAI()
+
+def load_and_store_pages():
+    loader = WebBaseLoader([
+        "https://www.thetrainline.com/destinations/trains-to-edinburgh",
+        "https://www.thetrainline.com/destinations/trains-to-london",
+        "https://www.thetrainline.com/destinations/trains-to-bath"
+    ])
+
+    scrape_data = loader.aload()
+    if PERSIST:
+        for page in scrape_data:
+            if (page.metadata):
+                data = {
+                    'content': page.page_content,
+                    'title': page.metadata["title"]
+                }
+
+                db.memorize(data)
+            else:
+                print("No page metadata")
+
+    return scrape_data
+
+def debug_print(msg):
+    if DEBUG:
+        print(msg)
+
+def translation_prompt():
+    template = "You are a helpful agent that translates {input_lang} to {output_lang}"
+    system_message_prompt = SystemMessagePromptTemplate.from_template(template)
+    return system_message_prompt
+
+class CommaSeparatedListOutputParser(BaseOutputParser):
+    def parse(self, text: str):
+        """Parse the output of an LLM call."""
+        return text.strip().split(", ")
 
 if __name__ == "__main__":
-    namespace = "travel-expert"
-    token_counter = utils.TokenCounter()
-    web_scraper = WebScraper()
-    engine = VectorQueryEngine()
+    scrape_data = []
+    if WEB_GET:
+        scrape_data = load_and_store_pages()
 
-    artifacts = WebLoader().load(
-        "https://www.thetrainline.com/destinations/trains-to-edinburgh",
+    human_template = "{query}"
+    human_prompt = HumanMessagePromptTemplate.from_template(human_template)
+
+    chat_prompt = ChatPromptTemplate.from_messages([translation_prompt(), human_prompt])
+
+    chain = LLMChain(
+        llm=llm,
+        prompt=chat_prompt,
+        output_parser=CommaSeparatedListOutputParser()
     )
 
-    engine.vector_store_driver.upsert_text_artifacts(
-        {namespace: artifacts}
+    answer = chain.run(
+        input_lang="English",
+        output_lang="English",
+        query="What are the name of the Pandas at Edinburgh Zoo"
     )
 
-    kb_client = KnowledgeBaseClient(
-        description="Contains information about travel destinations. "
-        "Use it to answer any travel-related questions.",
-        query_engine=engine,
-        namespace=namespace
-    )
-
-    pipeline = Pipeline(
-        prompt_driver=OpenAiPromptDriver(
-            model="gpt-3.5-turbo-16k",
-        ),
-        memory=ConversationMemory(),
-        event_listeners={
-            StartPromptEvent: [
-                lambda e: handle_prompt_event(e, token_counter)
-            ],
-            FinishPromptEvent: [
-                lambda e: handle_prompt_event(e, token_counter)
-            ]
-        }
-    )
-
-
-    pipeline.add_tasks(
-        ToolkitTask(
-            tools=[web_scraper, kb_client]
-        ),
-    )
-
-    pipeline.run("What are the names of the Pandas in Edinburgh Zoo?")
-
-    print(f"total tokens: {token_counter.tokens}")
+    print(answer)
